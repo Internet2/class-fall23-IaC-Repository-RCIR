@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<body>
+    
+    <h2>Request a subset of ERA5 reanalysis data from NCAR</h2>
+
+    <div>
+        Data source: <a href="https://rda.ucar.edu/datasets/ds633.0">https://rda.ucar.edu/datasets/ds633.0</a>
+    </div>
+    <div>
+        Please specify your desired parameters below.
+    </div>
+
+    <br><br>
+    <div>
+    <form action="/submit.php">
+        <label for="wlon"><strong>Western latitude boundary</strong></label><br>
+        <em>valid range 0.0 to 359.9 degrees east</em><br>
+        <input type="text" id="wlon" name="wlon" value="0.0"><br><br>
+
+        <label for="elon"><strong>Eastern latitude boundary</strong></label><br>
+        <em>valid range 0.0 to 359.9 degrees east</em><br>
+        <input type="text" id="elon" name="elon" value="0.0"><br><br>
+
+        <label for="slat"><strong>Southern latitude boundary</strong></label><br>
+        <em>valid range -90.0 to 90.0 degrees north</em><br>
+        <input type="text" id="slat" name="slat" value="0.0"><br><br>
+
+        <label for="nlat"><strong>Northern latitude boundary</strong></label><br>    
+        <em>valid range -90.0 to 90.0 degrees north</em><br>
+        <input type="text" id="nlat" name="nlat" value="0.0"><br><br>
+
+        <label for="sdate"><strong>Start date</strong></label><br>
+        <em>Format YYYY-MM-DD</em><br>
+        <input type="text" id="sdate" name="sdate" value="YYYY-MM-DD"><br><br>
+
+        <label for="edate"><strong>End date</strong></label><br>    
+        <em>Format YYYY-MM-DD</em><br>
+        <input type="text" id="edate" name="edate" value="YYYY-MM-DD"><br><br>
+
+        <label for="email"><strong>Your email address</strong></label><br>    
+        <em>Notification will be sent to this email when the data are ready for access</em><br>
+        <input type="text" id="email" name="email"><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+    </div>
+
+</body>
+</html>
