@@ -24,7 +24,7 @@ terraform init
 terraform apply
 ```
 
-#### Terraform Code for AWS (main.tf)
+#### Terraform Code for AWS (compute.tf)
 
 ```hcl
 provider "aws" {
@@ -39,7 +39,7 @@ resource "aws_instance" "jupyter_vm" {
 }
 ```
 
-#### Terraform Code for GCP (main.tf)
+#### Terraform Code for GCP (compute.tf)
 
 ```hcl
 provider "google" {
@@ -73,7 +73,7 @@ cd ansible
 ansible-playbook setup.yml
 ```
 
-#### Ansible Code (setup.yml)
+#### Ansible Code (jupyter.yml)
 
 ```yaml
 ---
