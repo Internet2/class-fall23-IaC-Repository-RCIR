@@ -1,4 +1,4 @@
-# Research Computing IaC Repository (RCIR)
+# CLASS advanced Fall 2023 - Research Computing IaC Repository (RCIR)
 
 ## Research Computing IaC Repository
 
