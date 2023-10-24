@@ -2,6 +2,22 @@
 
 ## Research Computing IaC Repository
 
+## Working Space
+
+- Some helpful links:
+  - [RAD Lab](<https://github.com/GoogleCloudPlatform/rad-lab>)
+
+  - [HPC Toolkit](<https://github.com/GoogleCloudPlatform/hpc-toolkit>)
+
+  - []
+
+- Open Questions
+
+* What's the best way to organize templates across classes (terraform, yml, containers, cfgs etc.) ?
+
+* 
+
+
 ## Table of Contents
 
 - [Overview](#overview)
