@@ -1,4 +1,4 @@
-# class-adv-fall2023-proj1
+# Research Computing IaC Repository (RCIR)
 
 ## Research Computing IaC Repository
 
