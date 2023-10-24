@@ -1,0 +1,57 @@
+# Compiled Files
+
+__pycache__/
+*.pyc
+*.pyo
+
+## Logs
+
+*.log
+
+## Environment Variables
+
+.env
+
+## Terraform
+
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+## Ansible
+
+*.retry
+
+## Docker
+
+Docker/*.env
+*.dockerignore
+
+## Bash
+
+*.swp
+*.bak
+*.tmp
+
+## IDEs and Editors
+
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+
+## OS generated files
+
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+## Dependency directories (Python, Node, etc.)
+
+node_modules/
+venv/
