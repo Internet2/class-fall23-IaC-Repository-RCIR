@@ -9,11 +9,13 @@
 
   - [HPC Toolkit](<https://github.com/GoogleCloudPlatform/hpc-toolkit>)
 
-  - []
+  - [EKS Cluster](<https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks>)
 
 - Open Questions
 
 * What's the best way to organize templates across classes (terraform, yml, containers, cfgs etc.) ?
+
+* How should high level variables (environment, path, instance etc) be handled?
 
 * 
 
