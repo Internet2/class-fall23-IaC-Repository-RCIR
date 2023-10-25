@@ -8,6 +8,13 @@ With each institution having its own data use restriction, we aim to allow Resea
 
 
 ### Terraform Code for AWS lifecycle Management
+Here we will enable the lifecycle rule where  transition blocks specify the conditions under which objects in the bucket should be transitioned to different storage classes. The code configures three transitions:
+
+After 30 days of inactivity, objects are moved to the "STANDARD_IA" storage class.
+After 60 days of inactivity, objects are moved to the "GLACIER_IR" storage class.
+After 180 days of inactivity, objects are moved to the "DEEP_ARCHIVE" storage class.
+
+There is also a expiration block that will delete the objects that are inactive for 1825 days (5 years(
 
 ```hcl
 resource "aws_s3_bucket" "create-s3-bucket" {
