@@ -23,6 +23,7 @@ A collection of terraform scripts a user can use to build the required infrastru
 | TF_VAR_github_oidc_event_access    | The string used to filter the allowed github event actions in a repository |
 | TF_VAR_github_oidc_provider_url | The github oidc provider URL. Will also be used as the name of the identity provider in aws |
 | TF_VAR_github_oidc_audience | The github oidc audience required for permissions scope |
+| TF_VAR_github_oidc_thumbprint | The thumbprint id for github oidc. This is a temporary dummy id since it's required but not used |
 
 ---
 ## IAM Setup
