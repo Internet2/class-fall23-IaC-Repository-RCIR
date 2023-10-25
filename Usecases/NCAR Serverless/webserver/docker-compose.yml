@@ -1,0 +1,16 @@
+version: '3'
+services:
+
+   nginx:
+      build: . 
+      ports:
+        - "8080:80"
+          #- "443:443"
+      container_name: webserver
+      volumes:
+        - ./:/var/log/nginx/
+      #env_file:
+          #- "compose.env"
+   
+   
+
