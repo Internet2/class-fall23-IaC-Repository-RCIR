@@ -39,8 +39,14 @@ variable "github_oicd_ecr_policy_name" {
   value       = "GithubOICDEcrPolicy"
 }
 
-variable "github_event_access" {
+variable "github_oicd_event_access" {
   description = "The github event subject to allow access by"
   type        = string
   value       = "ref:refs/tags/*"
+}
+
+variable "github_oicd_provider_url" {
+  description = "The github oicd provider URL. Will also be used as the name of the identity provider"
+  type        = string
+  value       = "token.actions.githubusercontent.com"
 }

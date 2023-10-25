@@ -51,15 +51,15 @@ resource "aws_iam_role" "github_oicd_role" {
         {
             "Effect": "Allow",
             "Principal": {
-                "Federated": "arn:aws:iam::${var.account_id}:oidc-provider/token.actions.githubusercontent.com"
+                "Federated": "arn:aws:iam::${var.account_id}:oidc-provider/${var.github_oicd_provider_url}"
             },
             "Action": "sts:AssumeRoleWithWebIdentity",
             "Condition": {
                 "StringEquals": {
-                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+                    "${var.github_oicd_provider_url}:aud": "sts.amazonaws.com"
                 },
                 "StringLike": {
-                    "token.actions.githubusercontent.com:sub": "repo:${var.github_org}/${var.github_repo_name}:${var.github_event_access}"
+                    "${var.github_oicd_provider_url}:sub": "repo:${var.github_org}/${var.github_repo_name}:${var.github_oicd_event_access}"
                 }
             }
         }
