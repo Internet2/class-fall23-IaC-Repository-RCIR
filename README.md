@@ -17,7 +17,9 @@
 
 * How should high level variables (environment, path, instance etc) be handled?
 
-* 
+* What is the best way to stitch together the various components that make up a use case? (terraform, ansible, bash, python, containers etc.)
+
+* Is there a need to host conatiner dockerfiles in the repo? 
 
 
 ## Table of Contents
