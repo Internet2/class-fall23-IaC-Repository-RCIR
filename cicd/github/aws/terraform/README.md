@@ -10,8 +10,6 @@ A collection of terraform scripts a user can use to build the required infrastru
 ---
 | Env Var                            | Description                                                      |
 |------------------------------------|------------------------------------------------------------------|
-| AWS_ACCESS_KEY_ID                  | The access key id of the user who will assume the terraform role |
-| AWS_SECRET_ACCESS_KEY              | The secret access key for the user who will assume the terraform role |
 | AWS_PROFILE                        | The profile set to the terraform role configuration |
 | TF_VAR_account_id                  | The account id where the terraform will run its actions |
 | TF_VAR_region                      | The region where any resources for this terraform will be built |
