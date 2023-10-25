@@ -1,15 +1,3 @@
-https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/197801/e5.oper.an.sfc.128_167_2t.ll025sc.1978010100_1978013123.nc
-https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/197802/e5.oper.an.sfc.128_167_2t.ll025sc.1978020100_1978022823.nc
-https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/197803/e5.oper.an.sfc.128_167_2t.ll025sc.1978030100_1978033123.nc
-https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/197804/e5.oper.an.sfc.128_167_2t.ll025sc.1978040100_1978043023.nc
-https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/197805/e5.oper.an.sfc.128_167_2t.ll025sc.1978050100_1978053123.nc
-https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/197806/e5.oper.an.sfc.128_167_2t.ll025sc.1978060100_1978063023.nc
-https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/197807/e5.oper.an.sfc.128_167_2t.ll025sc.1978070100_1978073123.nc
-https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/197808/e5.oper.an.sfc.128_167_2t.ll025sc.1978080100_1978083123.nc
-https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/197809/e5.oper.an.sfc.128_167_2t.ll025sc.1978090100_1978093023.nc
-https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/197810/e5.oper.an.sfc.128_167_2t.ll025sc.1978100100_1978103123.nc
-https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/197811/e5.oper.an.sfc.128_167_2t.ll025sc.1978110100_1978113023.nc
-https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/197812/e5.oper.an.sfc.128_167_2t.ll025sc.1978120100_1978123123.nc
 https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/197901/e5.oper.an.sfc.128_167_2t.ll025sc.1979010100_1979013123.nc
 https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/197902/e5.oper.an.sfc.128_167_2t.ll025sc.1979020100_1979022823.nc
 https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/197903/e5.oper.an.sfc.128_167_2t.ll025sc.1979030100_1979033123.nc
