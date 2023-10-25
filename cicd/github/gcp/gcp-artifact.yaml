@@ -1,0 +1,56 @@
+name: GCP Registry Build and Push Workflow
+on:
+  release:
+    types: [published]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  gcp-reg-build-push:
+    runs-on: ubuntu-latest
+    steps:
+      # checkout the repository
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+
+      # configure the gcp credentials with the workload identity provider, service account, and project
+      - id: auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          token_format: access_token
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}@${{ vars.GCP_PROJECT }}.iam.gserviceaccount.com
+
+      # login to AWS Artifact Registry with the configured credentials from the previous step. Requires registry region
+      - name: Login to Artifact Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ vars.GCP_REGISTRY_REGION }}-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
+
+      # extra metadata for docker with semver. Uses gcp registry region, project, repository name, and image name
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ vars.GCP_REGISTRY_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT }}/${{ vars.GCP_REPOSITORY_NAME }}/${{ vars.GCP_IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+
+      # finally build and push the image with context as the root of the repo, tags and labels from the meta step, and
+      # the build only gets pushed if the event is not a pull request
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          # should only fire on event release and action published.
+          push: ${{ github.event_name == 'release' && github.event.action == 'published' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
