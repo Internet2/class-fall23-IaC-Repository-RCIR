@@ -10,7 +10,7 @@ There is also an expiration block that will delete the objects that are inactive
 
 ```hcl
 resource "aws_s3_bucket" "create-s3-bucket" {
-  bucket = var.bucket_name
+  bucket = BucketName
 
   lifecycle_rule {
     id      = "example-lifecycle-rule"  # Set a name for your rule
@@ -39,9 +39,9 @@ resource "aws_s3_bucket" "create-s3-bucket" {
 ```
 
 ### Terraform Code for AWS enabling version on S3 
-Enabling versioning on an Amazon S3 (Simple Storage Service) bucket is important for several reasons, particularly for data integrity, recovery,compliance,
-Accidental Deletion and Overwrites, Data Recovery, Legal and Compliance Requirements, Audits, and Backup and or Restores.
-It's important to note that enabling versioning in S3 can increase storage costs because each version of an object is retained, and you are billed based on storage usage. You should carefully manage your versioned objects and implement lifecycle policies to control the retention and storage costs effectively.
+Enabling versioning on an Amazon S3 (Simple Storage Service) bucket is important for several reasons, particularly for data integrity, recovery, compliance,
+Accidental Deletion and Overwrites, Data Recovery, Legal and Compliance Requirements, Audits, and Backup and/or Restores.
+It's important to note that enabling versioning in S3 can increase storage costs because each version of an object is retained, and you are billed based on storage usage. You should carefully manage your versioned objects and implement lifecycle policies to control retention and storage costs effectively.
 
 ```hcl
 provider "aws" {
