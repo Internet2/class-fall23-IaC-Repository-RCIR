@@ -6,53 +6,59 @@ variable "account_id" {
 variable "region" {
   description = "The region the requisite resources will be deployed in"
   type        = string
-  value       = "us-east-1"
+  default       = "us-east-1"
 }
 
 variable "role_name" {
   description = "The role name used to access the account"
   type        = string
-  value       = "GithubOICDTerraform"
+  default       = "GithubOIDCTerraform"
 }
 
 variable "github_repo_name" {
   description = "The name of the target repository to be created"
   type        = string
-  value       = "cloud-cicd"
+  default       = "cloud-cicd"
 }
 
 variable "github_org" {
   description = "The github org the repository belongs to"
   type        = string
-  value       = "myorg"
+  default       = "myorg"
 }
 
-variable "github_oicd_role_name" {
-  description = "The name of the github oicd role"
+variable "github_oidc_role_name" {
+  description = "The name of the github oidc role"
   type        = string
-  value       = "GithubOICD"
+  default       = "GithubOIDC"
 }
 
-variable "github_oicd_ecr_policy_name" {
-  description = "The name of the github oicd ecr policy"
+variable "github_oidc_ecr_policy_name" {
+  description = "The name of the github oidc ecr policy"
   type        = string
-  value       = "GithubOICDEcrPolicy"
+  default       = "GithubOIDCEcrPolicy"
 }
 
-variable "github_oicd_event_access" {
+variable "github_oidc_event_access" {
   description = "The github event subject to allow access by"
   type        = string
-  value       = "ref:refs/tags/*"
+  default       = "ref:refs/tags/*"
 }
 
-variable "github_oicd_provider_url" {
-  description = "The github oicd provider URL. Will also be used as the name of the identity provider"
+variable "github_oidc_provider_url" {
+  description = "The github oidc provider URL. Will also be used as the name of the identity provider"
   type        = string
-  value       = "token.actions.githubusercontent.com"
+  default       = "token.actions.githubusercontent.com"
 }
 
-variable "github_oicd_audience" {
-  description = "The github oicd audience required for permissions scope"
+variable "github_oidc_audience" {
+  description = "The github oidc audience required for permissions scope"
   type        = string
-  value       = "sts.amazonaws.com"
+  default       = "sts.amazonaws.com"
+}
+
+variable "github_oidc_thumbprint" {
+  description = "The thumbprint id for github oidc. This is a temporary dummy id since it's required but not used"
+  type        = string
+  default       = "cf23df2207d99a74fbe169e3eba035e633b65d94"
 }

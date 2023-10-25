@@ -1,5 +1,5 @@
-resource "aws_iam_policy" "github_oicd_ecr_policy" {
-  name = var.github_oicd_ecr_policy_name
+resource "aws_iam_policy" "github_oidc_ecr_policy" {
+  name = var.github_oidc_ecr_policy_name
   path = "/"
 
   policy = <<EOF
@@ -39,9 +39,9 @@ resource "aws_iam_policy" "github_oicd_ecr_policy" {
 EOF
 }
 
-# the role github oicd will use
-resource "aws_iam_role" "github_oicd_role" {
-  name = var.github_oicd_role_name
+# the role github oidc will use
+resource "aws_iam_role" "github_oidc_role" {
+  name = var.github_oidc_role_name
   path = "/"
 
   assume_role_policy = <<EOF
@@ -51,15 +51,15 @@ resource "aws_iam_role" "github_oicd_role" {
         {
             "Effect": "Allow",
             "Principal": {
-                "Federated": "arn:aws:iam::${var.account_id}:oidc-provider/${var.github_oicd_provider_url}"
+                "Federated": "arn:aws:iam::${var.account_id}:oidc-provider/${var.github_oidc_provider_url}"
             },
             "Action": "sts:AssumeRoleWithWebIdentity",
             "Condition": {
                 "StringEquals": {
-                    "${var.github_oicd_provider_url}:aud": "${var.github_oicd_audience}"
+                    "${var.github_oidc_provider_url}:aud": "${var.github_oidc_audience}"
                 },
                 "StringLike": {
-                    "${var.github_oicd_provider_url}:sub": "repo:${var.github_org}/${var.github_repo_name}:${var.github_oicd_event_access}"
+                    "${var.github_oidc_provider_url}:sub": "repo:${var.github_org}/${var.github_repo_name}:${var.github_oidc_event_access}"
                 }
             }
         }
@@ -68,7 +68,7 @@ resource "aws_iam_role" "github_oicd_role" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "github_oicd_role_policy_attach" {
-  role       = aws_iam_role.github_oicd_role.name
-  policy_arn = aws_iam_policy.github_oicd_ecr_policy.arn
+resource "aws_iam_role_policy_attachment" "github_oidc_role_policy_attach" {
+  role       = aws_iam_role.github_oidc_role.name
+  policy_arn = aws_iam_policy.github_oidc_ecr_policy.arn
 }
