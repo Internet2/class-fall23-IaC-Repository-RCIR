@@ -1,0 +1,55 @@
+name: AWS ECR Build and Push Workflow
+on:
+  release:
+    types: [published]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  aws-ecr-build-push:
+    runs-on: ubuntu-latest
+    steps:
+      # checkout the repository
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+
+      # configure the aws credentials with the region, account, role name, and session name
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: arn:aws:iam::${{ vars.AWS_ACCOUNT }}:role/${{ vars.AWS_ROLE }}
+          role-session-name: ${{ vars.AWS_SESSION_NAME }}
+          mask-aws-account-id: 'false'
+
+      # login to AWS ECR with the configured credentials from the previous step
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          mask-password: 'true'
+
+      # extra metadata for docker with semver. uses the registry output from the login ecr step and the ecr repo name
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ steps.login-ecr.outputs.registry }}/${{ vars.AWS_REPO }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+
+      # finally build and push the image with context as the root of the repo, tags and labels from the meta step, and
+      # the build only gets pushed if the event is not a pull request
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          # should only fire on event release and action published.
+          push: ${{ github.event_name == 'release' && github.event.action == 'published' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
