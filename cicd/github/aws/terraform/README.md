@@ -22,6 +22,7 @@ A collection of terraform scripts a user can use to build the required infrastru
 | TF_VAR_github_oicd_ecr_policy_name | The name of the policy used to give oicd access to ecr |
 | TF_VAR_github_oicd_event_access    | The string used to filter the allowed github event actions in a repository |
 | TF_VAR_github_oicd_provider_url | The github oicd provider URL. Will also be used as the name of the identity provider in aws |
+| TF_VAR_github_oicd_audience | The github oicd audience required for permissions scope |
 
 ---
 ## IAM Setup

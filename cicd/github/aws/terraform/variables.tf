@@ -50,3 +50,9 @@ variable "github_oicd_provider_url" {
   type        = string
   value       = "token.actions.githubusercontent.com"
 }
+
+variable "github_oicd_audience" {
+  description = "The github oicd audience required for permissions scope"
+  type        = string
+  value       = "sts.amazonaws.com"
+}

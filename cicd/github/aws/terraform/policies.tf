@@ -56,7 +56,7 @@ resource "aws_iam_role" "github_oicd_role" {
             "Action": "sts:AssumeRoleWithWebIdentity",
             "Condition": {
                 "StringEquals": {
-                    "${var.github_oicd_provider_url}:aud": "sts.amazonaws.com"
+                    "${var.github_oicd_provider_url}:aud": "${var.github_oicd_audience}"
                 },
                 "StringLike": {
                     "${var.github_oicd_provider_url}:sub": "repo:${var.github_org}/${var.github_repo_name}:${var.github_oicd_event_access}"
