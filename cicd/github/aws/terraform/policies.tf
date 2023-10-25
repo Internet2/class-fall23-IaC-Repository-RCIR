@@ -1,5 +1,6 @@
-resource "aws_iam_policy" "github_oidc_ecr_policy" {
+resource "aws_iam_policy" "default" {
   name = var.github_oidc_ecr_policy_name
+  description = "The policies in order to deploy to ECR and access kms"
   path = "/"
 
   policy = <<EOF
@@ -37,13 +38,13 @@ resource "aws_iam_policy" "github_oidc_ecr_policy" {
     ]
 }
 EOF
+  tags = merge(local.tags, {})
 }
 
 # the role github oidc will use
-resource "aws_iam_role" "github_oidc_role" {
+resource "aws_iam_role" "default" {
   name = var.github_oidc_role_name
   path = "/"
-
   assume_role_policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -66,9 +67,10 @@ resource "aws_iam_role" "github_oidc_role" {
     ]
 }
 EOF
+  tags = merge(local.tags, {})
 }
 
-resource "aws_iam_role_policy_attachment" "github_oidc_role_policy_attach" {
-  role       = aws_iam_role.github_oidc_role.name
-  policy_arn = aws_iam_policy.github_oidc_ecr_policy.arn
+resource "aws_iam_role_policy_attachment" "default" {
+  role       = aws_iam_role.default.name
+  policy_arn = aws_iam_policy.default.arn
 }
