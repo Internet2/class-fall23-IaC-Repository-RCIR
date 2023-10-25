@@ -2,8 +2,11 @@
 
 ## Description
 A collection of terraform scripts a user can use to build the required infrastructure to set up a oidc connection from github to aws ecr 
+___
 
 ## Environment Variables
+This list of required and optional variables used by terraform
+
 | Variable                           | Required | Default                                   | Description                                                                                      | 
 |------------------------------------|----------|-------------------------------------------|--------------------------------------------------------------------------------------------------|
 | AWS_PROFILE                        | true     | default                                   | The profile set to the terraform role configuration                                              |
@@ -18,6 +21,7 @@ A collection of terraform scripts a user can use to build the required infrastru
 | TF_VAR_github_oidc_provider_url    |          | token.actions.githubusercontent.com       | The github oidc provider URL. Will also be used as the name of the identity provider in aws      |
 | TF_VAR_github_oidc_audience        |          | sts.amazonaws.com                         | The github oidc audience required for permissions scope                                          |
 | TF_VAR_github_oidc_thumbprint      |          | cf23df2207d99a74fbe169e3eba035e633b65d94  | The thumbprint id for github oidc. This is a temporary dummy id since it's required but not used |
+___
 
 ## Terraform State S3 Bucket
 This terraform requires an s3 bucket to write it's state out to so that multiple people can work on the same terraform if it needs to be updated in the future on an account.
@@ -26,12 +30,12 @@ This terraform requires an s3 bucket to write it's state out to so that multiple
 * **Region:** pick the same region as **TF_VAR_region**
 
 **Important Note:** make sure that the terraform role has access to this bucket otherwise terraform init will fail
+___
 
 ## Terraform Role, User, and Policy
 
-### Terraform Role Setup
-
-**Trust relationship**
+### Terraform Role Trust Relationship
+Create an IAM role with the following trust relationship.
 
 | Variable   | Description        |
 |------------|--------------------|
@@ -52,10 +56,12 @@ This terraform requires an s3 bucket to write it's state out to so that multiple
     ]
 }
 ```
-
-**Policy**
+___
+### Terraform Role Policy
+This policy will define what the terraform role has access to. Should be attached to the same role as the trust relationship
 
 _TODO: Restrict to just required permissions_
+
 ```json
 {
     "Version": "2012-10-17",
@@ -68,10 +74,9 @@ _TODO: Restrict to just required permissions_
     ]
 }
 ```
-
-### Terraform User
-
-**Policy**
+___
+### Terraform User Policy
+Create the following policy and attach it to a user.
 
 | Variable   | Description                    |
 |------------|--------------------------------|
@@ -90,6 +95,7 @@ _TODO: Restrict to just required permissions_
     }
 }
 ```
+___
 
 ## Terraform
 
@@ -106,7 +112,7 @@ _TODO: Restrict to just required permissions_
    export TF_VAR_github_org=myorg
    export TF_VAR_github_repo_name=cicd-repo
    ```
-
+___
 ### Run
 1. cd into the root of the terraform folder if not already there and perform the following command:
     ```bash
