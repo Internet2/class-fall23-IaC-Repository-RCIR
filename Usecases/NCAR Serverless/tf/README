@@ -1,0 +1,4 @@
+First need to:
+$ gcloud services enable compute.googleapis.com
+$ gcloud services enable container.googleapis.com
+$ terraform apply
