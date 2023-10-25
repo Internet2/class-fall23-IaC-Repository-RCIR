@@ -130,5 +130,10 @@ See [Contribution Guidelines](CONTRIBUTING.md).
 
 ## License
 
+## Acknowledgements
+This project was developed as part of the Internet2 CLASS program with contributions from participants at the Washington University in St. Louis, NC State University, UC San Diego, CU Boulder, Ohio State University, National Center for Atmospheric Research, Yale, Northwestern University, University of North Carolina at Chapel Hill and UC Riverside. 
+
+Contact: class@internet2.edu
+
 
 ---
