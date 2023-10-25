@@ -1,7 +1,5 @@
 # CLASS advanced Fall 2023 - Research Computing IaC Repository (RCIR)
 
-## Research Computing IaC Repository
-
 ## Working Space
 
 - Some helpful links:
@@ -11,7 +9,7 @@
 
   - [EKS Cluster](<https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks>)
 
-- Open Questions
+## Open Questions
 
 * What's the best way to organize templates across classes (terraform, yml, containers, cfgs etc.) ?
 
