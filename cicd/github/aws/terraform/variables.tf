@@ -3,16 +3,16 @@ variable "account_id" {
   type        = string
 }
 
-variable "role_name" {
-  description = "The role name used to access the account"
-  type        = string
-  value       = "GithubOICDTerraform"
-}
-
 variable "region" {
   description = "The region the requisite resources will be deployed in"
   type        = string
   value       = "us-east-1"
+}
+
+variable "role_name" {
+  description = "The role name used to access the account"
+  type        = string
+  value       = "GithubOICDTerraform"
 }
 
 variable "github_repo_name" {
