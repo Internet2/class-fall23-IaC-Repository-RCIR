@@ -8,9 +8,6 @@ terraform {
     }
   }
 
-#  backend "local" {
-#    path = "./terraform.tfstate"
-#  }
   backend "s3" {
     key = "terraform.tfstate"
 
@@ -18,11 +15,6 @@ terraform {
     region   = "%region%"
     role_arn = "arn:aws:iam::%account_id%:role/%role_name%"
   }
-}
-
-locals {
-  account_id = var.account_id
-  role_name = var.role_name
 }
 
 provider "aws" {

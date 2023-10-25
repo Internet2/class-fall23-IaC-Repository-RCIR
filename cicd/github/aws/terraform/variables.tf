@@ -3,6 +3,16 @@ variable "account_id" {
   type        = string
 }
 
+variable "github_org" {
+  description = "The github org the repository belongs to"
+  type        = string
+}
+
+variable "github_repo_name" {
+  description = "The name of the target repository to be created"
+  type        = string
+}
+
 variable "region" {
   description = "The region the requisite resources will be deployed in"
   type        = string
@@ -15,22 +25,10 @@ variable "role_name" {
   default     = "GithubOIDCTerraform"
 }
 
-variable "github_repo_name" {
-  description = "The name of the target repository to be created"
-  type        = string
-  default     = "cloud-cicd"
-}
-
-variable "github_org" {
-  description = "The github org the repository belongs to"
-  type        = string
-  default     = "myorg"
-}
-
 variable "github_oidc_role_name" {
   description = "The name of the github oidc role"
   type        = string
-  default     = "GithubOIDC"
+  default     = "GithubOIDCRole"
 }
 
 variable "github_oidc_ecr_policy_name" {
