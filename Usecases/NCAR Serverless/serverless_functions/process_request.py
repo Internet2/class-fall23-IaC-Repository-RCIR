@@ -1,4 +1,5 @@
 import functions_framework
+import requests
 
 @functions_framework.http
 def hello_http(request):
@@ -13,10 +14,10 @@ def hello_http(request):
     """
     is_valid_form = request.get_data(as_text=True,parse_form_data=True)
     if is_valid_form != '':
-        return "Something is wrong with form data", 501
+        return "Something is wrong with form data", 500
     error_messages = validateData(request)
     if len(error_messages) > 0:
-        return error_messages.join('\n')
+        return '\n'.join(error_messages), 500
     start_time = request.form['sdate']
     end_time = request.form['edate']
     files = get_subset_files(start_time, end_time)
@@ -27,11 +28,22 @@ def hello_http(request):
 
 def validateData(request):
     messages = []
-    if float(request.form['slat']) < -90:
+    slat = float(request.form['slat'])
+    nlat = float(request.form['nlat'])
+    elon = float(request.form['elon'])
+    wlon = float(request.form['wlon'])
+    if slat < -90 or slat > 90:
         messages.append('slat out of range')
+    if nlat < -90 or nlat > 90:
+        messages.append('nlat out of range')
+    if wlon < -180 or wlon > 360:
+        messages.append('wlon out of range')
+    if elon < -180 or elon > 360:
+        messages.append('elon out of range')
     return messages
 
 def get_subset_files(start_time, end_time):
+
     return []
 
 def subset(in_file):
