@@ -19,6 +19,10 @@
 
 * Is there a need to host conatiner dockerfiles in the repo? 
 
+* What are the best practices for storing tf state file ?
+
+* How can we handle Ansible inventory files in a scalable way?
+
 
 ## Table of Contents
 
