@@ -1,13 +1,9 @@
 # cicd / github / aws / terraform
 
 ## Description
-
----
 A collection of terraform scripts a user can use to build the required infrastructure to set up a oidc connection from github to aws ecr 
 
 ## Environment Variables
-
----
 | Variable                           | Required | Default                                   | Description                                                                                      | 
 |------------------------------------|----------|-------------------------------------------|--------------------------------------------------------------------------------------------------|
 | AWS_PROFILE                        | true     | default                                   | The profile set to the terraform role configuration                                              |
@@ -24,8 +20,6 @@ A collection of terraform scripts a user can use to build the required infrastru
 | TF_VAR_github_oidc_thumbprint      |          | cf23df2207d99a74fbe169e3eba035e633b65d94  | The thumbprint id for github oidc. This is a temporary dummy id since it's required but not used |
 
 ## Terraform State S3 Bucket
-
----
 This terraform requires an s3 bucket to write it's state out to so that multiple people can work on the same terraform if it needs to be updated in the future on an account.
 
 * **Name:** whatever-you-would-like
@@ -35,13 +29,12 @@ This terraform requires an s3 bucket to write it's state out to so that multiple
 
 ## Terraform Role, User, and Policy
 
----
 ### Terraform Role Setup
 
 **Trust relationship**
 
-| Variable | Description |
-| -------- | ----------- |
+| Variable   | Description        |
+|------------|--------------------|
 | account_id | The target account |
 
 ```json
@@ -80,10 +73,10 @@ _TODO: Restrict to just required permissions_
 
 **Policy**
 
-| Variable | Description |
-| -------- | ----------- |
-| account_id | The target account |
-| role_name | The name of the terraform role |
+| Variable   | Description                    |
+|------------|--------------------------------|
+| account_id | The target account             |
+| role_name  | The name of the terraform role |
 
 ```json
 {
@@ -99,8 +92,6 @@ _TODO: Restrict to just required permissions_
 ```
 
 ## Terraform
-
----
 
 ### Setup
 1. Make a copy of the file ".tmpl/main.tf.tmpl" and place it in the parent of the tmpl folder.
