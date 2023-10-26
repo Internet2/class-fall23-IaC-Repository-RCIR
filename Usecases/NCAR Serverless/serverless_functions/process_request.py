@@ -1,5 +1,6 @@
 import functions_framework
 import requests
+import re
 
 @functions_framework.http
 def hello_http(request):
@@ -40,11 +41,29 @@ def validateData(request):
         messages.append('wlon out of range')
     if elon < -180 or elon > 360:
         messages.append('elon out of range')
+    if re.match('^\d\d\d\d-\d\d-\d\d$', request.form['sdate']) is None:
+        messages.append('start date is not formatted properly: YYYY-MM-DD')
+    if re.match('^\d\d\d\d-\d\d-\d\d$', request.form['edate']) is None:
+        messages.append('end date is not formatted properly: YYYY-MM-DD')
     return messages
 
 def get_subset_files(start_time, end_time):
+    request = requests.get('http://35.238.89.218/ERA5_TMP_2m.txt')
+    files = request.content.decode().split('\n')
+    regex = re.compile('.*sfc\/(......)\/.*')
+    def within_timerange(_file, start_time, end_time):
+        match = regex.match(_file)
+        if not match:
+            return False
+        yearmonth = int(match[1])
+        return yearmonth > parse_ym(start_time) and yearmonth < parse_ym(end_time)
 
-    return []
+    needed_files = list(filter(lambda x: within_timerange(x, start_time, end_time), files))
+
+    return needed_files
+
+def parse_ym(date):
+    return int(date[:4]+date[5:7])
 
 def subset(in_file):
-    return "temp"
+    return in_file
