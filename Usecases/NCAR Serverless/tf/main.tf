@@ -30,7 +30,7 @@ module "gcp-network" {
   subnets = [
     {
       subnet_name   = "${var.subnetwork}-${var.env_name}"
-      subnet_ip     = "10.10.0.0/16"
+      subnet_ip     = "${var.main_subnet}"
       subnet_region = var.region
     },
   ]
@@ -39,11 +39,11 @@ module "gcp-network" {
     "${var.subnetwork}-${var.env_name}" = [
       {
         range_name    = var.ip_range_pods_name
-        ip_cidr_range = "10.20.0.0/16"
+        ip_cidr_range = "${var.ip_range_pods}"
       },
       {
         range_name    = var.ip_range_services_name
-        ip_cidr_range = "10.30.0.0/16"
+        ip_cidr_range = "${var.ip_range_services}"
       },
     ]
   }
@@ -71,12 +71,12 @@ module "gke" {
   
   node_pools = [
     {
-      name                      = "node-pool"
-      machine_type              = "e2-medium"
-      node_locations            = "us-west1-a,us-west1-b,us-west1-c"
-      min_count                 = 1
-      max_count                 = 2
-      disk_size_gb              = 30
+      name                      = "${var.node_pool_name}"
+      machine_type              = "${var.node_machine_type}"
+      node_locations            = "${var.node_locations}"
+      min_count                 = var.min_nodes
+      max_count                 = var.max_nodes
+      disk_size_gb              = var.node_disk_size
     },
   ]
 }
