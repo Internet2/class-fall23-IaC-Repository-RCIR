@@ -1,3 +1,4 @@
+
 resource "google_storage_bucket" "auto-expire2" {
   name          = "intelligent_tiering_bucket3"
   location      = "US"
@@ -5,24 +6,6 @@ resource "google_storage_bucket" "auto-expire2" {
   public_access_prevention = "enforced" 
 
   force_destroy = true  /* removes all objects in bucket when delete */
-
-
-#  iam_members { 
-#    {
-#       role = "roles/storage.admin" /* full read/write to all tiers for PI -- maybe the service_account? */
-#       member = "ikaufman@ucsd.edu"  /* Can be comma delimited list, or by group -> ["group:foo-admins@example.com"] */
-#    }
-#
-#    {
-#       role = "roles/storage.admin" /* read/write to all but ARCHIVE for lab manager */
-#       member = "user:spam@example.com"
-#    }
-#
-#    {
-#       role = "roles/storage.objectViewer"  /* read only general lab member */
-#       member = "user:spam@example.com"
-#    }
-#  }
 
   lifecycle_rule  { 
       condition  {
@@ -87,3 +70,34 @@ resource "google_storage_bucket" "auto-expire2" {
 #  }
 
 }
+
+# The first resource assigns IAM Binding for the desired roles - these are in addition to the default roles that already exist
+#
+# Some example roles:
+#
+#       role = "roles/storage.admin" /* full read/write to all tiers for PI -- maybe the service_account? */
+#       role = "roles/storage.objectAdmin"  /* Full read/write to Objects stored in the bucket */
+#       role = "roles/storage.objectViewer"  /* Object read only general lab member */
+#
+# member/members can be user:{emailid}, serviceAccount:{emailid}, group:{emailid}, projectOwner:projectid
+#
+
+
+resource "google_storage_bucket_iam_member" "member" {
+  bucket = google_storage_bucket.auto-expire2.name
+  role = "roles/storage.admin"
+  members = [
+     "user:jane@example.com",
+     "user:bob@example.com",
+  ] 
+
+# Set a condition to expire the additional created roles
+
+  condition {
+    title       = "expires_after_2023_10_27"
+    description = "Expiring at midnight of 2023-10-27"
+    expression  = "request.time < timestamp(\"2023-10-31T00:00:00Z\")"
+  }
+}
+
+
