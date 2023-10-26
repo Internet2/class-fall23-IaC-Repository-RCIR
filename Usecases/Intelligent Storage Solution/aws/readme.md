@@ -99,3 +99,13 @@ resource "aws_s3_bucket_policy" "example_bucket_policy" {
   })
 }
 ```
+### Enabling KMS encryption on an S3 bucket
+```hcl
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "aws:kms"
+      }
+    }
+  }
+```
