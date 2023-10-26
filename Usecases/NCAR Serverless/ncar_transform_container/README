@@ -1,0 +1,6 @@
+This container is still in a working state. 
+
+As of 26 October 2023, once you build the image, the entrypoint can take positional arguments for url ($1), easter longitude boundary ($2), western longitude boundary ($3), northern latitude boundary ($4), southern latitude boundary ($5),
+and an optional "bucket" ($6)
+
+- example run line: docker run -t test-ncar-subset https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/198010/e5.oper.an.sfc.128_167_2t.ll025sc.1980100100_1980103123.nc 85 75 70 40 gs://ncar-subset-target/test-user-target/
