@@ -2,6 +2,7 @@
 
 ## Description
 This section contains all the required files pertaining to constructing a CI/CD pipeline from Github to AWS ECR
+___
 
 ## Contents
 | Item      | Description                                                                                                   |
