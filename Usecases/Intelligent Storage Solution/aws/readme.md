@@ -22,7 +22,7 @@ resource "aws_s3_bucket" "create-s3-bucket" {
     }
 
     transition {
-      days          = 60
+      days          = 90
       storage_class = "GLACIER_IR"  # Move objects to GLACIER_IR after 60 days of inactivity
     }
 
@@ -57,37 +57,45 @@ resource "aws_s3_bucket" "example_bucket" {
   }
 }
 ```
-### Terraform Code for AWS setting up ACL config for S3 
-Access Control Lists (ACLs) for storage buckets, such as those in Amazon S3 or other cloud storage services, is crucial for ensuring the security and proper management of your data. ACLs define who can access your bucket, what level of access they have, and under what conditions.
-
+### Terraform Code for AWS setting up bucket policy config for S3 
+Access Control Lists (ACLs) for storage buckets, such as those in Amazon S3 or other cloud storage services, are crucial for ensuring the security and proper management of your data. ACLs define who can access your bucket, their access level, and under what conditions.
+this snippet creates an S3 bucket with a default "private" ACL and then attaches a bucket policy that grants permissions for "GetObject" and "DeleteObject" actions to IAM users or roles with ARNs containing "arn:aws:iam::*:user/admin." Other users will not have these privileges unless their ARN matches this specific pattern, effectively restricting access to a specific group of users or roles.
 ```hcl
-provider "aws" {
-  region = "us-east-1"  # Change to your desired AWS region
-}
+resource "aws_s3_bucket" "create-s3-bucket" {
 
-resource "aws_s3_bucket" "example_bucket" {
-  bucket = "your-unique-bucket-name"  # Change to your desired bucket name
+  bucket = "kevintestclassadvanced"
 
-  acl = "private"  # Set the desired ACL. Possible values are: private, public-read, public-read-write, authenticated-read, and aws-exec-read
+  acl = "private"
 
-  # Define a bucket policy to allow specific IAM roles access to the bucket
-  policy = <<POLICY
-{
-  "Version": "xxxx-xx-xx",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": ["arn:aws:iam::YOUR_ACCOUNT_ID:role/Role1", "arn:aws:iam::YOUR_ACCOUNT_ID:role/Role2"] ## replace the ARNs of the IAM roles that should have access to the bucket.
+resource "aws_s3_bucket_policy" "example_bucket_policy" {
+  bucket = aws_s3_bucket.create-s3-bucket.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = "*",
+        Action = "s3:GetObject",
+        Resource = aws_s3_bucket.create-s3-bucket.arn,
+        Condition = {
+          StringEquals = {
+            "aws:Requester" = "arn:aws:iam::*:user/admin"
+          }
+        }
       },
-      "Action": "s3:*",
-      "Resource": [
-        "arn:aws:s3:::your-unique-bucket-name/*",
-        "arn:aws:s3:::your-unique-bucket-name"
-      ]
-    }
-  ]
-}
-POLICY
+      {
+        Effect = "Allow",
+        Principal = "*",
+        Action = "s3:DeleteObject",
+        Resource = aws_s3_bucket.create-s3-bucket.arn,
+        Condition = {
+          StringEquals = {
+            "aws:Requester" = "arn:aws:iam::*:user/admin"
+          }
+        }
+      }
+    ]
+  })
 }
 ```
