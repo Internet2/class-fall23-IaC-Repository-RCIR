@@ -147,5 +147,7 @@ ___
    $ terraform apply
    ```
    It will prompt you one last time to check the items and if all looks good type yes 
-5. If everything went well with the apply step, you should have a fully set up pipeline into ECR with Github OIDC using Identity Federation in AWS. Please see the workflow folder under cicd/github/aws/workflow for a fully functioning github workflow file that will login, build, and push the image into ECR completeing the pipeline
+5. If everything went well with the apply step, you should have a fully set up pipeline into ECR with Github OIDC 
+   using Identity Federation in AWS. Please see the workflow folder under cicd/github/aws/workflow for a fully 
+   functioning github workflow file that will login, build, and push the image into ECR completing the pipeline
    
