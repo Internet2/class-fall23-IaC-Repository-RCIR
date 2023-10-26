@@ -1,28 +1,5 @@
 # CLASS advanced Fall 2023 - Research Computing IaC Repository (RCIR)
 
-## Working Space
-
-- Some helpful links:
-  - [RAD Lab](<https://github.com/GoogleCloudPlatform/rad-lab>)
-
-  - [HPC Toolkit](<https://github.com/GoogleCloudPlatform/hpc-toolkit>)
-
-  - [EKS Cluster](<https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks>)
-
-## Open Questions
-
-* What's the best way to organize templates across classes (terraform, yml, containers, cfgs etc.) ?
-
-* How should high level variables (environment, path, instance etc) be handled?
-
-* What is the best way to stitch together the various components that make up a use case? (terraform, ansible, bash, python, containers etc.)
-
-* Is there a need to host conatiner dockerfiles in the repo? 
-
-* What are the best practices for storing tf state file ?
-
-* How can we handle Ansible inventory files in a scalable way?
-
 
 ## Table of Contents
 
@@ -137,3 +114,28 @@ Contact: class@internet2.edu
 
 
 ---
+
+### Working Space
+
+- Some helpful links:
+  - [RAD Lab](<https://github.com/GoogleCloudPlatform/rad-lab>)
+
+  - [HPC Toolkit](<https://github.com/GoogleCloudPlatform/hpc-toolkit>)
+
+  - [EKS Cluster](<https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks>)
+
+### Open Questions
+
+* What's the best way to organize templates across classes (terraform, yml, containers, cfgs etc.) ?
+
+* How should high level variables (environment, path, instance etc) be handled?
+
+* What is the best way to stitch together the various components that make up a use case? (terraform, ansible, bash, python, containers etc.)
+
+* Is there a need to host conatiner dockerfiles in the repo? 
+
+* What are the best practices for storing tf state file ?
+
+* How can we handle Ansible inventory files in a scalable way?
+
+
