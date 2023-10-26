@@ -1,4 +1,13 @@
-First need to:
+This terraform code will spin up a Kubernetes cluster on Google Cloud.
+
+First start by taking a look at variables.tf. You will need to update the 
+variable values based on your project and needs.
+
+
+To deploy the IaC:
+First login to the GCP cloud shell. Then enable the following services
 $ gcloud services enable compute.googleapis.com
 $ gcloud services enable container.googleapis.com
+
+To do the actual deploy:
 $ terraform apply
