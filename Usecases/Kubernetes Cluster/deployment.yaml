@@ -1,0 +1,45 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "ncar-subset-1"
+  namespace: "default"
+  labels:
+    app: "ncar-subset-1"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "ncar-subset-1"
+  template:
+    metadata:
+      labels:
+        app: "ncar-subset-1"
+    spec:
+      containers:
+      - name: "nginx-1"
+        image: "nginx:latest"
+      - name: "ncar-subset-sha256-2"
+        image: "us-central1-docker.pkg.dev/i2class-fall2023-dmdevrie/ncar-transform/ncar-subset@sha256:7fcaf853a4262dc1f548d55a74753ac15a12a7a2490b1cd58cd24afb2bb4a0a2"
+---
+apiVersion: "autoscaling/v2"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "ncar-subset-1-hpa-s6qo"
+  namespace: "default"
+  labels:
+    app: "ncar-subset-1"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "ncar-subset-1"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      target:
+        type: "Utilization"
+        averageUtilization: 80
