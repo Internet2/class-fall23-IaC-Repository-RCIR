@@ -39,18 +39,15 @@ This repository provides Infrastructure as Code (IaC) templates and use-case imp
 ### Root
 
 - `README.md`: This document.
-- `LICENSE`: License information.
 - `.gitignore`: Git ignore rules.
 
 ### GitHub Workflows
 
-- `.github/workflows/ci-cd.yml`: CI/CD pipeline.
-
-### Documentation
-
-- `docs/getting-started.md`: Quickstart guide.
+This folder contains GitHub workflows for CI/CD.
 
 ### Templates
+
+This folder contains IaC templates for research computing, that can be used to build cloud infrastructure (as shown with the use-cases in the `use-cases` folder)
 
 #### AWS
 
@@ -64,20 +61,22 @@ This repository provides Infrastructure as Code (IaC) templates and use-case imp
 
 ### Use-Cases
 
+This folder contains use-case implementations for research computing, that use the templates in the `templates` folder.
+
 - `use-cases/secure-storage`: Secure storage solutions.
 - `use-cases/kubernetes-cluster`: Kubernetes setups.
 - `use-cases/containerized-workflows`: Containerized workflows.
 
-### Containers
-
-- `containers/scientific_computing/container_1/Dockerfile`: Example Dockerfile.
-
 ### Scripts
+
+This foder contains Bash and Python scripts that could be used to stitch together the various components that make up a use case.
 
 - `scripts/bash`: Bash scripts.
 - `scripts/python`: Python scripts.
 
 ### Environments
+
+This folder contains environment-specific configurations.
 
 - `environments/aws`: AWS-specific configs.
 - `environments/gcp`: GCP-specific configs.
@@ -88,7 +87,7 @@ This repository provides Infrastructure as Code (IaC) templates and use-case imp
 1. **Clone**: `git clone https://github.com/your-repo.git`
 2. **Navigate**: `cd your-repo`
 3. **Install**: Follow READMEs in each directory.
-4. **Run**: Use Bash or Python scripts.
+4. **Run**: Follow instructions in each README.
 5. **Deploy**: Use Terraform or Ansible.
 
 ## Design Considerations
