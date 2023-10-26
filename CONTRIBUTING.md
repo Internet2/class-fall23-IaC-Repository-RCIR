@@ -45,7 +45,7 @@ Thank you for considering contributing to our Research Computing Use-Cases repos
 
 ## Template for Use-Case
 
-\```markdown
+```markdown
 # Use-Case - Your Use-Case Title Here
 
 ## Step-by-Step Instructions
@@ -78,7 +78,7 @@ echo "Hello, World!"
 ### Best Practices:
 
 - List any best practices related to this use-case.
-\```
+```
 
 ---
 
