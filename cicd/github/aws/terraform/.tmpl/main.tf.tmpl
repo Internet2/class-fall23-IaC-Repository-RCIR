@@ -1,0 +1,30 @@
+terraform {
+  required_version = "~> 1.6"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.22.0"
+    }
+  }
+
+  backend "s3" {
+    key = "terraform.tfstate"
+    bucket   = "%tfstate_bucket_name%"
+    region   = "%region%"
+  }
+}
+
+provider "aws" {
+  region = var.region
+
+  assume_role {
+    role_arn = "arn:aws:iam::%account_id%:role/%role_name%"
+  }
+}
+
+locals {
+  tags = {
+    Project = "%project_name%"
+  }
+}
