@@ -11,7 +11,6 @@ this workflow (using AWS as an example) would continue to extend until it is dep
 deployed to ECS or EKS.
 
 Both supported clouds (GCP and AWS) have workflows that can build, login, and push images to their respective registries
-if already set up. Only AWS currently has the terraform build process to build the infrastructure on the fly to support
-the workflow file provided. GCP terraform support is coming next.
+if already set up. Both AWS and GCP have supporting terraform files.
 
 ![CICD Pipeline Visualization](CICD%20Pipeline%20Visualization.png)
