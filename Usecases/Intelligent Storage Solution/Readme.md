@@ -6,96 +6,174 @@ If time permits, we may include terraform scripts that include policies for dele
 This subfolder aims to include general terraform scripts that can be modified for a user's use case. 
 With each institution having its own data use restriction, we aim to allow Research IT to come in and modify the provided configuration to their use cases. 
 
+## Step-by-Step Instructions
 
-### Terraform Code for AWS lifecycle Management
-Here we will enable the lifecycle rule where  transition blocks specify the conditions under which objects in the bucket should be transitioned to different storage classes. The code configures three transitions:
+### Step 1 - Ensure Project Availability
 
-After 30 days of inactivity, objects are moved to the "STANDARD_IA" storage class.
-After 60 days of inactivity, objects are moved to the "GLACIER_IR" storage class.
-After 180 days of inactivity, objects are moved to the "DEEP_ARCHIVE" storage class.
+- Make sure you have an active GCP project with the required permissions to create and manage storage buckets.
 
-There is also a expiration block that will delete the objects that are inactive for 1825 days (5 years(
+### Step 2 - Install Required Software
+
+- Install Terraform v0.14+
+- Install Google Cloud SDK
+- Install Bash
+
+### Step 3 - Initialize Terraform
+
+\`\`\`bash
+terraform init
+\`\`\`
+
+### Step 4 - Apply Terraform Configuration for Intelligent Storage Bucket
+
+\`\`\`bash
+terraform apply
+\`\`\`
+
+#### Terraform Code for GCP (intelligent_storage.tf)
 
 ```hcl
+resource "google_storage_bucket" "auto-expire2" {
+  name          = "intelligent_tiering_bucket3"
+  location      = "US"
+  force_destroy = true  /* removes all objects in bucket when delete */
+  public_access_prevention = "enforced"
+
+  // Uncomment to define IAM members and permissions
+  // iam_members { 
+  //   {
+  //      role = "roles/storage.admin"
+  //      member = ""
+  //   }
+  //   // More IAM roles...
+  // }
+
+  // Lifecycle rules to automatically transition storage classes
+  lifecycle_rule {
+    condition {
+      age = 0
+    }
+    action {
+      type          = "SetStorageClass"
+      storage_class = "Standard"
+    }
+  }
+  lifecycle_rule {
+    condition {
+      age = 30
+    }
+    action {
+      type          = "SetStorageClass"
+      storage_class = "Nearline"
+    }
+  }
+  lifecycle_rule {
+    condition {
+      age = 90
+    }
+    action {
+      type          = "SetStorageClass"
+      storage_class = "Coldline"
+    }
+  }
+  lifecycle_rule {
+    condition {
+      age = 365
+    }
+    action {
+      type          = "SetStorageClass"
+      storage_class = "Archive"
+    }
+  }
+  lifecycle_rule {
+    condition {
+      age = 1826  /* Delete after 5 years */
+    }
+    action {
+      type          = "Delete"
+    }
+  }
+
+  // Enable versioning
+  versioning {
+    enabled = true
+  }
+
+  // Uncomment to enable encryption
+  // encryption {
+  //   default_kms_key_name = string
+  // }
+}
+```
+#### Terraform Code for AWS (intelligent_storage_S3.tf)
+
+```hcl
+provider "aws" {
+  region     = "us-east-1"
+  access_key = "XXX"  // Input your own Access Key
+  secret_key = "XXX"  // Input your own Secret Key
+}
+
 resource "aws_s3_bucket" "create-s3-bucket" {
-  bucket = var.bucket_name
+  bucket = var.bucket-name
+  acl    = "private"
 
   lifecycle_rule {
-    id      = "example-lifecycle-rule"  # Set a name for your rule
+    id      = "LifeCycle Name"
     enabled = true
 
     transition {
       days          = 30
-      storage_class = "STANDARD_IA"  # Move objects to STANDARD_IA after 30 days of inactivity
+      storage_class = "STANDARD_IA"
     }
-
     transition {
       days          = 60
-      storage_class = "GLACIER_IR"  # Move objects to GLACIER_IR after 60 days of inactivity
+      storage_class = "GLACIER_IR"
     }
-
     transition {
       days          = 180
-      storage_class = "DEEP_ARCHIVE"  # Move objects to DEEP_ARCHIVE after 180 days of inactivity
+      storage_class = "DEEP_ARCHIVE"
     }
 
     expiration {
-      days = 1825  # Delete the bucket after five years of inactivity
+      days = 1825  // Delete bucket after 5 years
     }
   }
-}
-```
-
-### Terraform Code for AWS enabling version on S3 
-Enabling versioning on an Amazon S3 (Simple Storage Service) bucket is important for several reasons, particularly for data integrity, recovery,compliance,
-Accidental Deletion and Overwrites, Data Recovery, Legal and Compliance Requirements, Audits, and Backup and or Restores.
-It's important to note that enabling versioning in S3 can increase storage costs because each version of an object is retained, and you are billed based on storage usage. You should carefully manage your versioned objects and implement lifecycle policies to control the retention and storage costs effectively.
-
-```hcl
-provider "aws" {
-  region = "us-east-1"  # Change to your desired AWS region
-}
-
-resource "aws_s3_bucket" "example_bucket" { 
-  bucket = "your-unique-bucket-name"  # Change to your desired bucket name
-  acl    = "private"
 
   versioning {
     enabled = true
   }
-}
-```
-### Terraform Code for AWS setting up ACL config for S3 
 
-```hcl
-provider "aws" {
-  region = "us-east-1"  # Change to your desired AWS region
-}
+  tags = {
+    Environment = "LifeCycle Controlled"
+  }
 
-resource "aws_s3_bucket" "example_bucket" {
-  bucket = "your-unique-bucket-name"  # Change to your desired bucket name
-
-  acl = "private"  # Set the desired ACL. Possible values are: private, public-read, public-read-write, authenticated-read, and aws-exec-read
-
-  # Define a bucket policy to allow specific IAM roles access to the bucket
-  policy = <<POLICY
-{
-  "Version": "xxxx-xx-xx",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": ["arn:aws:iam::YOUR_ACCOUNT_ID:role/Role1", "arn:aws:iam::YOUR_ACCOUNT_ID:role/Role2"] ## replace the ARNs of the IAM roles that should have access to the bucket.
-      },
-      "Action": "s3:*",
-      "Resource": [
-        "arn:aws:s3:::your-unique-bucket-name/*",
-        "arn:aws:s3:::your-unique-bucket-name"
-      ]
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "aws:kms"
+      }
     }
-  ]
-}
-POLICY
+  }
 }
 ```
+### Step 5 - Validate Configuration
+
+- Validate that the bucket has been created and configured as per your requirements.
+
+### Step 6 - Troubleshooting
+
+- **Issue**: Terraform fails to create the bucket.
+  - **Solution**: Check your internet connection, permissions, and GCP API access.
+
+- **Issue**: Lifecycle rules are not working as expected.
+  - **Solution**: Validate the lifecycle conditions and actions in the Terraform script.
+
+---
+
+### Best Practices:
+
+- Always encrypt sensitive data.
+- Implement IAM roles to restrict access.
+- Regularly audit and monitor bucket for any unauthorized access or anomalies.
 

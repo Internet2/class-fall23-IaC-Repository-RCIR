@@ -1,28 +1,5 @@
 # CLASS advanced Fall 2023 - Research Computing IaC Repository (RCIR)
 
-## Working Space
-
-- Some helpful links:
-  - [RAD Lab](<https://github.com/GoogleCloudPlatform/rad-lab>)
-
-  - [HPC Toolkit](<https://github.com/GoogleCloudPlatform/hpc-toolkit>)
-
-  - [EKS Cluster](<https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks>)
-
-## Open Questions
-
-* What's the best way to organize templates across classes (terraform, yml, containers, cfgs etc.) ?
-
-* How should high level variables (environment, path, instance etc) be handled?
-
-* What is the best way to stitch together the various components that make up a use case? (terraform, ansible, bash, python, containers etc.)
-
-* Is there a need to host conatiner dockerfiles in the repo? 
-
-* What are the best practices for storing tf state file ?
-
-* How can we handle Ansible inventory files in a scalable way?
-
 
 ## Table of Contents
 
@@ -62,18 +39,15 @@ This repository provides Infrastructure as Code (IaC) templates and use-case imp
 ### Root
 
 - `README.md`: This document.
-- `LICENSE`: License information.
 - `.gitignore`: Git ignore rules.
 
 ### GitHub Workflows
 
-- `.github/workflows/ci-cd.yml`: CI/CD pipeline.
-
-### Documentation
-
-- `docs/getting-started.md`: Quickstart guide.
+This folder contains GitHub workflows for CI/CD.
 
 ### Templates
+
+This folder contains IaC templates for research computing, that can be used to build cloud infrastructure (as shown with the use-cases in the `use-cases` folder)
 
 #### AWS
 
@@ -87,20 +61,22 @@ This repository provides Infrastructure as Code (IaC) templates and use-case imp
 
 ### Use-Cases
 
+This folder contains use-case implementations for research computing, that use the templates in the `templates` folder.
+
 - `use-cases/secure-storage`: Secure storage solutions.
 - `use-cases/kubernetes-cluster`: Kubernetes setups.
 - `use-cases/containerized-workflows`: Containerized workflows.
 
-### Containers
-
-- `containers/scientific_computing/container_1/Dockerfile`: Example Dockerfile.
-
 ### Scripts
+
+This foder contains Bash and Python scripts that could be used to stitch together the various components that make up a use case.
 
 - `scripts/bash`: Bash scripts.
 - `scripts/python`: Python scripts.
 
 ### Environments
+
+This folder contains environment-specific configurations.
 
 - `environments/aws`: AWS-specific configs.
 - `environments/gcp`: GCP-specific configs.
@@ -111,7 +87,7 @@ This repository provides Infrastructure as Code (IaC) templates and use-case imp
 1. **Clone**: `git clone https://github.com/your-repo.git`
 2. **Navigate**: `cd your-repo`
 3. **Install**: Follow READMEs in each directory.
-4. **Run**: Use Bash or Python scripts.
+4. **Run**: Follow instructions in each README.
 5. **Deploy**: Use Terraform or Ansible.
 
 ## Design Considerations
@@ -130,5 +106,35 @@ See [Contribution Guidelines](CONTRIBUTING.md).
 
 ## License
 
+## Acknowledgements
+This project was developed as part of the Internet2 CLASS program with contributions from participants at the Washington University in St. Louis, NC State University, UC San Diego, CU Boulder, Ohio State University, National Center for Atmospheric Research, Yale, Northwestern University, University of North Carolina at Chapel Hill and UC Riverside. 
+
+Contact: class@internet2.edu
+
 
 ---
+
+### Working Space
+
+- Some helpful links:
+  - [RAD Lab](<https://github.com/GoogleCloudPlatform/rad-lab>)
+
+  - [HPC Toolkit](<https://github.com/GoogleCloudPlatform/hpc-toolkit>)
+
+  - [EKS Cluster](<https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks>)
+
+### Open Questions
+
+* What's the best way to organize templates across classes (terraform, yml, containers, cfgs etc.) ?
+
+* How should high level variables (environment, path, instance etc) be handled?
+
+* What is the best way to stitch together the various components that make up a use case? (terraform, ansible, bash, python, containers etc.)
+
+* Is there a need to host conatiner dockerfiles in the repo? 
+
+* What are the best practices for storing tf state file ?
+
+* How can we handle Ansible inventory files in a scalable way?
+
+
