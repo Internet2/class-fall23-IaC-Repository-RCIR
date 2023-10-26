@@ -1,11 +1,13 @@
 # cicd / github / aws / terraform
 
 ## Description
-A collection of terraform scripts a user can use to build the required infrastructure to set up a oidc connection from github to aws ecr 
+A collection of terraform scripts a user can use to build the required infrastructure to set up an oidc connection from 
+github to aws ecr 
 ___
 
 ## Environment Variables
-This list of required and optional variables used by terraform
+This list of required and optional variables used by terraform. These can be set (without the TF_VAR) in terraform.tfvars.
+An example file is provided, simply copy it and rename it to terraform.tfvars and add/change any one you wish.
 
 | Variable                           | Required | Default                                   | Description                                                                                      | 
 |------------------------------------|----------|-------------------------------------------|--------------------------------------------------------------------------------------------------|
@@ -104,17 +106,15 @@ ___
 2. Replace the template placeholders in the main.tf.tmpl file with their actual values. The main.tf file is ignored by git. See .tmpl/README.md for more information.
 3. Create the S3 bucket outlined above in **Terraform State S3 Bucket**
 4. Create the Role, User, and Policy required outlined above in **Terraform Role, User, and Policy**
-5. Export with values the required terraform variables in the shell session you plan to use for the terraform command. See **Environment Variables** above for more information.
-    ```bash
-   # values below are example values
-   export AWS_PROFILE=aws_config_role_profile
-   export TF_VAR_account_id=123456789012
-   export TF_VAR_github_org=myorg
-   export TF_VAR_github_repo_name=cicd-repo
+5. Copy the terraform.tfvars.example file and rename it terraform.tfvars. Once renamed fill out the 3 variables listed
    ```
 ___
 ### Run
-1. cd into the root of the terraform folder if not already there and perform the following command:
+1. Set the aws profile required via:
+   ```bash
+   export AWS_PROFILE=profile_that_has_access
+   ```
+2. cd into the root of the terraform folder if not already there and perform the following command:
     ```bash
    $ terraform init
     
@@ -136,16 +136,18 @@ ___
     Terraform has been successfully initialized!
     ```
 
-   If you see output similar to above terraform has been initialized successfully.
-2. Once initialized you should run the following:
+   If you see output similar to above terraform has been initialized successfully. 
+3. Once initialized you should run the following:
    ```bash
    $ terraform plan
    ```
-   If this is your first time running all the resources will need to be created.
-3. Once everything looks good with the terraform plan it's time to run:
+   If this is your first time running all the resources will need to be created. 
+4. Once everything looks good with the terraform plan it's time to run:
    ```bash
    $ terraform apply
    ```
-   It will prompt you one last time to check the items and if all looks good type yes
-4. If everything went well with the apply step, you should have a fully set up pipeline into ECR with Github OIDC using Identity Federation in AWS. Please see the workflow folder under cicd/github/aws/workflow for a fully functioning github workflow file that will login, build, and push the image into ECR completeing the pipeline
+   It will prompt you one last time to check the items and if all looks good type yes 
+5. If everything went well with the apply step, you should have a fully set up pipeline into ECR with Github OIDC 
+   using Identity Federation in AWS. Please see the workflow folder under cicd/github/aws/workflow for a fully 
+   functioning github workflow file that will login, build, and push the image into ECR completing the pipeline
    

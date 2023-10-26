@@ -1,0 +1,5 @@
+.terraform*
+terraform.tfvars
+gcloud-sa-key.json
+main.tf
+plan.tf
