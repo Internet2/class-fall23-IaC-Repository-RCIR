@@ -58,6 +58,7 @@ resource "aws_s3_bucket" "example_bucket" {
 }
 ```
 ### Terraform Code for AWS setting up ACL config for S3 
+Access Control Lists (ACLs) for storage buckets, such as those in Amazon S3 or other cloud storage services, is crucial for ensuring the security and proper management of your data. ACLs define who can access your bucket, what level of access they have, and under what conditions.
 
 ```hcl
 provider "aws" {
