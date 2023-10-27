@@ -16,6 +16,7 @@
 
 ### Step-1 (alternative) - Create a cluster from the command line
 - Open a Google Cloud Shell terminal and run the following command
+
    ```  
    gcloud container clusters create-auto "ncar-autopilot-cluster-1" \
    --project "i2class-fall2023-dmdevrie" \
