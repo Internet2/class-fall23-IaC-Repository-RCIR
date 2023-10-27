@@ -25,7 +25,12 @@ Labels: {
     app: ncar-subset
 }
 ```
-- Subsequent changes to the deployment can be made by modifying `deployment.yaml` and applying the changes:
+- Subsequent changes to the deployment can be made by modifying `deployment.yaml`.  Open a Google Cloud Shell terminal and run the following command to apply the changes:
 ```
+## First retrieve auth credentials for the cluster and verify
+gcloud container clusters get-credentials ncar-autopilot-cluster-1 --zone=us-central1
+kubectl cluster-info
+
+## Apply deployment yaml
 kubectl apply -f deployment.yaml
 ```
