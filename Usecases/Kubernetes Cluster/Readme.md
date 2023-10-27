@@ -14,15 +14,7 @@ region: us-central1
 - Advanced settings: use default values and continue
 
 ### Step-1 (alternative) - Create a cluster from the command line
-- Open a Google Cloud Shell terminal and run the following commands
-
-   First retrieve auth credentials for the cluster and verify  
-   ```  
-   gcloud container clusters get-credentials ncar-autopilot-cluster-1 --zone=us-central1  
-   kubectl cluster-info  
-   ```
-
-   Then create the cluster  
+- Open a Google Cloud Shell terminal and run the following command
    ```  
    gcloud container clusters create-auto "ncar-autopilot-cluster-1" \
    --project "i2class-fall2023-dmdevrie" \
@@ -46,6 +38,14 @@ Labels: {
 }
 ```
 - Subsequent changes to the deployment can be made by modifying `deployment.yaml`.  Open a Google Cloud Shell terminal and run the following command to apply the changes:
-```
-kubectl apply -f deployment.yaml
-```
+
+   First retrieve auth credentials for the cluster and verify  
+   ```  
+   gcloud container clusters get-credentials ncar-autopilot-cluster-1 --zone=us-central1  
+   kubectl cluster-info  
+   ```
+
+   Then apply the changes  
+   ```  
+   kubectl apply -f deployment.yaml  
+   ```
