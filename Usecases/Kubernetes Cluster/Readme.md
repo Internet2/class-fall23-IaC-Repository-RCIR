@@ -1,3 +1,56 @@
 # Use-Case - Build a Kubernetes Cluster
 
 ## Step-by-Step Instructions
+
+### Step-1 - Create a cluster in GKE Autopilot mode
+
+- In the Google Cloud Console, create a cluster on the **Kubernetes clusters** page
+- Cluster basics: specify a name and region for the cluster, and use default values for other fields:
+
+   ```  
+   name: ncar-autopilot-cluster-1  
+   region: us-central1  
+   ```
+- Networking: use default values and continue
+- Advanced settings: use default values and continue
+
+### Step-1 (alternative) - Create a cluster from the command line
+- Open a Google Cloud Shell terminal and run the following command
+
+   ```  
+   gcloud container clusters create-auto "ncar-autopilot-cluster-1" \
+   --project "i2class-fall2023-dmdevrie" \
+   --region "us-central1" \
+   --release-channel "regular" \
+   --network "projects/i2class-fall2023-dmdevrie/global/networks/default" \
+   --subnetwork "projects/i2class-fall2023-dmdevrie/regions/us-central1/subnetworks/default" \
+   --cluster-ipv4-cidr "/17"  
+   ```
+
+### Step-2 - Add a deployment
+
+- From the **Kubernetes clusters** page, select `+DEPLOY`
+- In addition to the nginx container, add the NCAR subsetting container.  Select 'Add a container'.
+- Choose `Existing container` and select the container `us-central1-docker.pkg.dev/i2class-fall2023-dmdevrie/ncar-transform/ncar-subset` from the Artifact Registry.
+- Set the deployment name and app label (these should be the same):
+
+   ```  
+   Deployment name: ncar-subset  
+   Labels: {  
+      app: ncar-subset  
+   }  
+   ```
+
+### Updating the deployment
+- Subsequent changes to the deployment can be made by modifying `deployment.yaml`.  Open a Google Cloud Shell terminal and run the following command to apply the changes:
+
+   First retrieve auth credentials for the cluster and verify  
+   ```  
+   gcloud container clusters get-credentials ncar-autopilot-cluster-1 --zone=us-central1  
+   kubectl cluster-info  
+   ```
+
+   Then apply the changes  
+   ```  
+   kubectl apply -f deployment.yaml  
+   ```
