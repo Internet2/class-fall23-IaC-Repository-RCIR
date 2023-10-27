@@ -1,3 +1,7 @@
+provider "google" {
+  project     = "my-project-id"
+  region      = "us-central1"
+}
 
 resource "google_storage_bucket" "auto-expire2" {
   name          = "intelligent_tiering_bucket3"
