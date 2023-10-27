@@ -17,15 +17,16 @@ spec:
         app: "ncar-subset-1"
     spec:
       containers:
-      - name: "nginx-1"
-        image: "nginx:latest"
-      - name: "ncar-subset-sha256-2"
+      - name: "ncar-subset-sha256-1"
         image: "us-central1-docker.pkg.dev/i2class-fall2023-dmdevrie/ncar-transform/ncar-subset@sha256:7fcaf853a4262dc1f548d55a74753ac15a12a7a2490b1cd58cd24afb2bb4a0a2"
+        command:
+        - "docker run -t test-ncar-subset https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/198010/e5.oper.an.sfc.128_167_2t.ll025sc.1980100100_1980103123.nc\
+          \ 85 75 70 40 gs://ncar-subset-target/test-user-target/"
 ---
 apiVersion: "autoscaling/v2"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: "ncar-subset-1-hpa-s6qo"
+  name: "ncar-subset-1-hpa-qauz"
   namespace: "default"
   labels:
     app: "ncar-subset-1"

@@ -25,3 +25,7 @@ Labels: {
     app: ncar-subset
 }
 ```
+- Subsequent changes to the deployment can be made by modifying `deployment.yaml` and applying the changes:
+```
+kubectl apply -f deployment.yaml
+```
