@@ -2,22 +2,26 @@
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
-  name: "ncar-subset-1"
+  name: "ncar-subset-2"
   namespace: "default"
   labels:
-    app: "ncar-subset-1"
+    app: "ncar-subset-2"
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: "ncar-subset-1"
+      app: "ncar-subset-2"
   template:
     metadata:
       labels:
-        app: "ncar-subset-1"
+        app: "ncar-subset-2"
     spec:
       containers:
-      - name: "ncar-subset-sha256-1"
+      - name: "nginx-1"
+        image: "nginx:latest"
+      - name: "docker-2"
+        image: "docker:latest"
+      - name: "ncar-subset-sha256-3"
         image: "us-central1-docker.pkg.dev/i2class-fall2023-dmdevrie/ncar-transform/ncar-subset@sha256:7fcaf853a4262dc1f548d55a74753ac15a12a7a2490b1cd58cd24afb2bb4a0a2"
         command:
         - "docker run -t test-ncar-subset https://stratus.rda.ucar.edu/ds633.0/e5.oper.an.sfc/198010/e5.oper.an.sfc.128_167_2t.ll025sc.1980100100_1980103123.nc\
@@ -26,14 +30,14 @@ spec:
 apiVersion: "autoscaling/v2"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: "ncar-subset-1-hpa-qauz"
+  name: "ncar-subset-2-hpa-dtvf"
   namespace: "default"
   labels:
-    app: "ncar-subset-1"
+    app: "ncar-subset-2"
 spec:
   scaleTargetRef:
     kind: "Deployment"
-    name: "ncar-subset-1"
+    name: "ncar-subset-2"
     apiVersion: "apps/v1"
   minReplicas: 1
   maxReplicas: 5
