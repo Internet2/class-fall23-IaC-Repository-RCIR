@@ -24,7 +24,11 @@ resource "azurerm_storage_account" "i2c23proj" {
   access_tier                     = "Hot"
 #  public_network_access_enabled   = false
   allow_nested_items_to_be_public = true
-#  enable_last_access_tracking = true
+
+  blob_properties {
+    versioning_enabled = true
+    last_access_time_enabled = true
+  }
 }
 
 #resource "azurerm_role_assignment" "role_assignment" {
@@ -44,13 +48,13 @@ resource "azurerm_storage_management_policy" "i2c23proj" {
     }
     actions {
       base_blob {
-        # I'd rather use last_access_time than modification, but can't figure out
-        # how to set that up (`tf apply` tells me "Last access time based tracking policy
-        # must be enabled before using its specific actions in object lifecycle management policy."
+        # Note that to use days since last_access_time to move blobs to cooler storage,
+        # last_access_time_enabled must be set to true in the blob_properties block in
+        # the storage account above.
         #
-        tier_to_cool_after_days_since_modification_greater_than    = var.time_to_cool
-        tier_to_archive_after_days_since_modification_greater_than = var.time_to_archive
-        delete_after_days_since_modification_greater_than          = var.time_to_delete
+        tier_to_cool_after_days_since_last_access_time_greater_than    = var.time_to_cool
+        tier_to_archive_after_days_since_last_access_time_greater_than = var.time_to_archive
+        delete_after_days_since_last_access_time_greater_than          = var.time_to_delete
       }
       snapshot {
         delete_after_days_since_creation_greater_than = var.snapshot_retention

@@ -2,7 +2,7 @@
 
 This is a nascent implementation of an intelligent storage solution on Microsoft Azure,
 managed by Terraform.
-The current feature set is limited to lifecycle management, in which the the access tier 
+The current feature set is limited to lifecycle management, in which the access tier 
 of blob storage is automatically changed
 from hot to cool to archive based on the last modified time of the blob.
 
@@ -31,14 +31,10 @@ resource "azurerm_resource_group" "i2c23proj" {
 
 ## Create storage account and its management policy
 
-Using the last access time of a blob rather than the modification time as the determinant of
-when to move a blob to a cooler tier might make more sense.
-However, this apparently requires that the
-"last access time based tracking policy must be enabled before using its specific actions 
-in object lifecycle management policy," (the error message returned from `tf apply`),
-but it's not obvious how to do that. 
+Disabling public network access interfered with creating a storage container.
+Need to look into that.
 
-Also, Azure storage has hot, cool, cold and archive tiers, but the strings to set these
+Azure storage has hot, cool, cold and archive tiers, but the strings to set these
 values in Terraform (such as `tier_to_cool_after_days_since_modification_greater_than`) 
 seem not to have a cold analog.
 
@@ -56,7 +52,11 @@ resource "azurerm_storage_account" "i2c23proj" {
   access_tier                     = "Hot"
 #  public_network_access_enabled   = false
   allow_nested_items_to_be_public = true
-#  enable_last_access_tracking = true
+
+  blob_properties {
+    versioning_enabled = true
+    last_access_time_enabled = true
+  }
 }
 
 
@@ -71,9 +71,9 @@ resource "azurerm_storage_management_policy" "i2c23proj" {
     }
     actions {
       base_blob {
-        tier_to_cool_after_days_since_modification_greater_than    = var.time_to_cool
-        tier_to_archive_after_days_since_modification_greater_than = var.time_to_archive
-        delete_after_days_since_modification_greater_than          = var.time_to_delete
+        tier_to_cool_after_days_since_last_access_time_greater_than    = var.time_to_cool
+        tier_to_archive_after_days_since_last_access_time_greater_than = var.time_to_archive
+        delete_after_days_since_last_access_time_greater_than          = var.time_to_delete
       }
       snapshot {
         delete_after_days_since_creation_greater_than = var.snapshot_retention
