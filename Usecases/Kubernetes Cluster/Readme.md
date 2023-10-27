@@ -24,7 +24,7 @@ region: us-central1
 
    Then create the cluster  
    ```  
-   gcloud container clusters create-auto "ncar-autopilot-cluster-2" \
+   gcloud container clusters create-auto "ncar-autopilot-cluster-1" \
    --project "i2class-fall2023-dmdevrie" \
    --region "us-central1" \
    --release-channel "regular" \
