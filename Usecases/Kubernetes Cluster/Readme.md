@@ -24,7 +24,14 @@ region: us-central1
 
    Then create the cluster  
    ```  
-   gcloud container --project "i2class-fall2023-dmdevrie" clusters create-auto "ncar-autopilot-cluster-2" --region "us-central1" --release-channel "regular" --network "projects/i2class-fall2023-dmdevrie/global/networks/default" --subnetwork "projects/i2class-fall2023-dmdevrie/regions/us-central1/subnetworks/default" --cluster-ipv4-cidr "/17"  
+   gcloud container \
+   --project "i2class-fall2023-dmdevrie" \
+   clusters create-auto "ncar-autopilot-cluster-2" \
+   --region "us-central1" \
+   --release-channel "regular" \
+   --network "projects/i2class-fall2023-dmdevrie/global/networks/default" \
+   --subnetwork "projects/i2class-fall2023-dmdevrie/regions/us-central1/subnetworks/default" \
+   --cluster-ipv4-cidr "/17"  
    ```
 
 ### Step-2 - Add a deployment
