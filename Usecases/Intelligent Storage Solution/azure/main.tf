@@ -22,8 +22,16 @@ resource "azurerm_storage_account" "i2c23proj" {
   account_replication_type        = "LRS"
   enable_https_traffic_only       = true
   access_tier                     = "Hot"
+#  public_network_access_enabled   = false
   allow_nested_items_to_be_public = true
+#  enable_last_access_tracking = true
 }
+
+#resource "azurerm_role_assignment" "role_assignment" {
+#  scope               = azurerm_storage_account.storage_account.id
+#  role_definition_id  = join("/", [local.sub, data.azurerm_subscription.primary.subscription_id, local.permission_storage_blob_data_contributor])
+#  principal_id        = var.devops_project_object_id
+#}
 
 resource "azurerm_storage_management_policy" "i2c23proj" {
   storage_account_id = azurerm_storage_account.i2c23proj.id
