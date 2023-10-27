@@ -40,6 +40,8 @@
       app: ncar-subset  
    }  
    ```
+
+### Updating the deployment
 - Subsequent changes to the deployment can be made by modifying `deployment.yaml`.  Open a Google Cloud Shell terminal and run the following command to apply the changes:
 
    First retrieve auth credentials for the cluster and verify  
