@@ -188,7 +188,7 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
 
   admin_ssh_key {
     username   = var.username
-    public_key = jsondecode(azapi_resource_action.ssh_public_key_gen.output).publicKey
+    public_key = azapi_resource_action.ssh_public_key_gen.output.publicKey
   }
 
   boot_diagnostics {
@@ -258,7 +258,7 @@ resource "azapi_resource" "ssh_public_key" {
 }
 
 output "key_data" {
-  value = jsondecode(azapi_resource_action.ssh_public_key_gen.output).publicKey
+  value = azapi_resource_action.ssh_public_key_gen.output.publicKey
 }
 ```
 
